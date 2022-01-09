@@ -1,12 +1,12 @@
-# Wordle-archive
+# Wordle Archive
 
-🔗 https://www.deavngthakkar.com/wordle-archive/
+🔗 https://www.devangthakkar.com/wordle_archive/
 
 An archive for [Wordle](https://www.powerlanguage.co.uk/wordle/) by [Josh Wardle](https://twitter.com/powerlanguish) and built on top of [Word Master](https://octokatherine.github.io/word-master/) created by [Katherine Peterson](https://twitter.com/katherinecodes), Wordle Archive is ... simply an archive of past Wordles. I created this because I wanted to go back to Wordles that I had missed.
 
 ## How did I do it?
 
-This project would not have been possible without [Selenium](https://github.com/SeleniumHQ/selenium) and [libfaketime](libfaketime). I figured out that if I changed my computer time to a previous date, I could trick Wordle into allowing me to access the Wordle for the day. I was not ready to do that manually for all 200 Wordles so far, so I am glad `libfaketime` exists. 
+This project would not have been possible without [Selenium](https://github.com/SeleniumHQ/selenium) and [libfaketime](libfaketime). I figured out that if I changed my computer time to a previous date, I could trick Wordle into allowing me to access the Wordle for the day. I was not ready to do that manually for 200+ Wordles so far, so I am glad `libfaketime` exists. 
 
 ## Rules
 
