@@ -308,123 +308,234 @@ function App() {
     play()
   }
 
-  return (
-    <div className={darkMode ? 'dark' : ''}>
-      <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
-        <header className="flex items-center py-2 px-3 text-primary dark:text-primary-dark">
-          <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
-            <Settings />
-          </button>
-          <h1 className="flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og">
-            WORDLE ARCHIVE {day}
-          </h1>
-          <button type="button" onClick={() => setInfoModalIsOpen(true)}>
-            <Info />
-          </button>
-        </header>
-        <div className="flex flex-force-center items-center py-3">
-          <div className="flex items-center px-1">
-            <button
-              type="button"
-              className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-              onClick={playFirst}>First
+  console.log(window.innerWidth)
+
+  var buttons = ``
+
+  if (window.innerWidth < 600) {
+    return (
+      <div className={darkMode ? 'dark' : ''}>
+        <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
+          <header className="flex items-center py-2 px-3 text-primary dark:text-primary-dark">
+            <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
+              <Settings />
             </button>
-          </div>
-          <div className="flex items-center px-2">
-            <button
-              type="button"
-              className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-              onClick={playPrevious}>Previous
+            <h1 className="flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og">
+              WORDLE ARCHIVE {day}
+            </h1>
+            <button type="button" onClick={() => setInfoModalIsOpen(true)}>
+              <Info />
             </button>
+          </header>
+          <div className="flex flex-force-center items-center py-3">
+            <div className="flex items-center px-1">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playPrevious}>Previous
+              </button>
+            </div>
+            <div className="flex items-center px-2">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playRandom}>Random
+              </button>
+            </div>
+            <div className="flex items-center px-3">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playNext}>Next
+              </button>
+            </div>
           </div>
-          <div className="flex items-center px-3">
-            <button
-              type="button"
-              className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-              onClick={playRandom}>Random
-            </button>
+          <div className="flex items-center flex-col py-4">
+            <div className="grid grid-cols-5 grid-flow-row gap-4">
+              {board.map((row, rowNumber) =>
+                row.map((letter, colNumber) => (
+                  <span
+                    key={colNumber}
+                    className={`${getCellStyles(
+                      rowNumber,
+                      colNumber,
+                      letter
+                    )} inline-flex items-center font-medium justify-center text-lg w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
+                  >
+                    {letter}
+                  </span>
+                ))
+              )}
+            </div>
           </div>
-          <div className="flex items-center px-4">
-            <button
-              type="button"
-              className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-              onClick={playNext}>Next
-            </button>
-          </div>
-          <div className="flex items-center px-5">
-            <button
-              type="button"
-              className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-              onClick={playLast}>Last
-            </button>
-          </div>
+          <InfoModal
+            isOpen={infoModalIsOpen}
+            handleClose={handleInfoClose}
+            darkMode={darkMode}
+            styles={modalStyles}
+          />
+          <EndGameModal
+            isOpen={modalIsOpen}
+            handleClose={closeModal}
+            styles={modalStyles}
+            darkMode={darkMode}
+            gameState={gameState}
+            state={state}
+            currentStreak={currentStreak}
+            longestStreak={longestStreak}
+            answer={answer}
+            playAgain={() => {
+              setAnswer(initialStates.answer)
+              setGameState(initialStates.gameState)
+              setBoard(initialStates.board)
+              setCellStatuses(initialStates.cellStatuses)
+              setCurrentRow(initialStates.currentRow)
+              setCurrentCol(initialStates.currentCol)
+              setLetterStatuses(initialStates.letterStatuses)
+              closeModal()
+              streakUpdated.current = false
+            }}
+            day={day}
+            currentRow={currentRow}
+            cellStatuses={cellStatuses}
+          />
+          <SettingsModal
+            isOpen={settingsModalIsOpen}
+            handleClose={() => setSettingsModalIsOpen(false)}
+            styles={modalStyles}
+            darkMode={darkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+          <Keyboard
+            letterStatuses={letterStatuses}
+            addLetter={addLetter}
+            onEnterPress={onEnterPress}
+            onDeletePress={onDeletePress}
+            gameDisabled={gameState !== state.playing}
+          />
         </div>
-        <div className="flex items-center flex-col py-4">
-          <div className="grid grid-cols-5 grid-flow-row gap-4">
-            {board.map((row, rowNumber) =>
-              row.map((letter, colNumber) => (
-                <span
-                  key={colNumber}
-                  className={`${getCellStyles(
-                    rowNumber,
-                    colNumber,
-                    letter
-                  )} inline-flex items-center font-medium justify-center text-lg w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
-                >
-                  {letter}
-                </span>
-              ))
-            )}
-          </div>
-        </div>
-        <InfoModal
-          isOpen={infoModalIsOpen}
-          handleClose={handleInfoClose}
-          darkMode={darkMode}
-          styles={modalStyles}
-        />
-        <EndGameModal
-          isOpen={modalIsOpen}
-          handleClose={closeModal}
-          styles={modalStyles}
-          darkMode={darkMode}
-          gameState={gameState}
-          state={state}
-          currentStreak={currentStreak}
-          longestStreak={longestStreak}
-          answer={answer}
-          playAgain={() => {
-            setAnswer(initialStates.answer)
-            setGameState(initialStates.gameState)
-            setBoard(initialStates.board)
-            setCellStatuses(initialStates.cellStatuses)
-            setCurrentRow(initialStates.currentRow)
-            setCurrentCol(initialStates.currentCol)
-            setLetterStatuses(initialStates.letterStatuses)
-            closeModal()
-            streakUpdated.current = false
-          }}
-          day={day}
-          currentRow={currentRow}
-          cellStatuses={cellStatuses}
-        />
-        <SettingsModal
-          isOpen={settingsModalIsOpen}
-          handleClose={() => setSettingsModalIsOpen(false)}
-          styles={modalStyles}
-          darkMode={darkMode}
-          toggleDarkMode={toggleDarkMode}
-        />
-        <Keyboard
-          letterStatuses={letterStatuses}
-          addLetter={addLetter}
-          onEnterPress={onEnterPress}
-          onDeletePress={onDeletePress}
-          gameDisabled={gameState !== state.playing}
-        />
       </div>
-    </div>
-  )
+    )
+  }
+  else {
+    return (
+      <div className={darkMode ? 'dark' : ''}>
+        <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
+          <header className="flex items-center py-2 px-3 text-primary dark:text-primary-dark">
+            <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
+              <Settings />
+            </button>
+            <h1 className="flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og">
+              WORDLE ARCHIVE {day}
+            </h1>
+            <button type="button" onClick={() => setInfoModalIsOpen(true)}>
+              <Info />
+            </button>
+          </header>
+          <div className="flex flex-force-center items-center py-3">
+            <div className="flex items-center px-1">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playFirst}>First
+              </button>
+            </div>
+            <div className="flex items-center px-2">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playPrevious}>Previous
+              </button>
+            </div>
+            <div className="flex items-center px-3">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playRandom}>Random
+              </button>
+            </div>
+            <div className="flex items-center px-4">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playNext}>Next
+              </button>
+            </div>
+            <div className="flex items-center px-5">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playLast}>Last
+              </button>
+            </div>
+          </div>
+          <div className="flex items-center flex-col py-4">
+            <div className="grid grid-cols-5 grid-flow-row gap-4">
+              {board.map((row, rowNumber) =>
+                row.map((letter, colNumber) => (
+                  <span
+                    key={colNumber}
+                    className={`${getCellStyles(
+                      rowNumber,
+                      colNumber,
+                      letter
+                    )} inline-flex items-center font-medium justify-center text-lg w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
+                  >
+                    {letter}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+          <InfoModal
+            isOpen={infoModalIsOpen}
+            handleClose={handleInfoClose}
+            darkMode={darkMode}
+            styles={modalStyles}
+          />
+          <EndGameModal
+            isOpen={modalIsOpen}
+            handleClose={closeModal}
+            styles={modalStyles}
+            darkMode={darkMode}
+            gameState={gameState}
+            state={state}
+            currentStreak={currentStreak}
+            longestStreak={longestStreak}
+            answer={answer}
+            playAgain={() => {
+              setAnswer(initialStates.answer)
+              setGameState(initialStates.gameState)
+              setBoard(initialStates.board)
+              setCellStatuses(initialStates.cellStatuses)
+              setCurrentRow(initialStates.currentRow)
+              setCurrentCol(initialStates.currentCol)
+              setLetterStatuses(initialStates.letterStatuses)
+              closeModal()
+              streakUpdated.current = false
+            }}
+            day={day}
+            currentRow={currentRow}
+            cellStatuses={cellStatuses}
+          />
+          <SettingsModal
+            isOpen={settingsModalIsOpen}
+            handleClose={() => setSettingsModalIsOpen(false)}
+            styles={modalStyles}
+            darkMode={darkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+          <Keyboard
+            letterStatuses={letterStatuses}
+            addLetter={addLetter}
+            onEnterPress={onEnterPress}
+            onDeletePress={onDeletePress}
+            gameDisabled={gameState !== state.playing}
+          />
+        </div>
+      </div>
+    )
+  }
 }
 
 export default App
