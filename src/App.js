@@ -343,29 +343,6 @@ function App() {
               )}
             </div>
           </div>
-          <div className="flex flex-force-center items-center py-4">
-            <div className="flex items-center px-1">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playPrevious}>Previous
-              </button>
-            </div>
-            <div className="flex items-center px-2">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playRandom}>Random
-              </button>
-            </div>
-            <div className="flex items-center px-3">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playNext}>Next
-              </button>
-            </div>
-          </div>
           <InfoModal
             isOpen={infoModalIsOpen}
             handleClose={handleInfoClose}
@@ -411,6 +388,29 @@ function App() {
             onDeletePress={onDeletePress}
             gameDisabled={gameState !== state.playing}
           />
+          <div className="flex flex-force-center items-center py-4">
+            <div className="flex items-center px-1">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playPrevious}>Previous
+              </button>
+            </div>
+            <div className="flex items-center px-2">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playRandom}>Random
+              </button>
+            </div>
+            <div className="flex items-center px-3">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playNext}>Next
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -448,43 +448,6 @@ function App() {
               )}
             </div>
           </div>
-          <div className="flex flex-force-center items-center py-4">
-            <div className="flex items-center px-1">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playFirst}>First
-              </button>
-            </div>
-            <div className="flex items-center px-2">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playPrevious}>Previous
-              </button>
-            </div>
-            <div className="flex items-center px-3">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playRandom}>Random
-              </button>
-            </div>
-            <div className="flex items-center px-4">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playNext}>Next
-              </button>
-            </div>
-            <div className="flex items-center px-5">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playLast}>Last
-              </button>
-            </div>
-          </div>
           <InfoModal
             isOpen={infoModalIsOpen}
             handleClose={handleInfoClose}
@@ -530,6 +493,43 @@ function App() {
             onDeletePress={onDeletePress}
             gameDisabled={gameState !== state.playing}
           />
+          <div className="flex flex-force-center items-center py-4">
+            <div className="flex items-center px-1">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playFirst}>First
+              </button>
+            </div>
+            <div className="flex items-center px-2">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playPrevious}>Previous
+              </button>
+            </div>
+            <div className="flex items-center px-3">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playRandom}>Random
+              </button>
+            </div>
+            <div className="flex items-center px-4">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playNext}>Next
+              </button>
+            </div>
+            <div className="flex items-center px-5">
+              <button
+                type="button"
+                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playLast}>Last
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     )
