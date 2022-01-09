@@ -325,7 +325,7 @@ function App() {
               <Info />
             </button>
           </header>
-          <div className="flex items-center flex-col py-4">
+          <div className="flex items-center flex-col py-3">
             <div className="grid grid-cols-5 grid-flow-row gap-4">
               {board.map((row, rowNumber) =>
                 row.map((letter, colNumber) => (
@@ -343,7 +343,7 @@ function App() {
               )}
             </div>
           </div>
-          <div className="flex flex-force-center items-center py-3">
+          <div className="flex flex-force-center items-center py-4">
             <div className="flex items-center px-1">
               <button
                 type="button"
@@ -430,7 +430,7 @@ function App() {
               <Info />
             </button>
           </header>
-          <div className="flex items-center flex-col py-4">
+          <div className="flex items-center flex-col py-3">
             <div className="grid grid-cols-5 grid-flow-row gap-4">
               {board.map((row, rowNumber) =>
                 row.map((letter, colNumber) => (
@@ -448,7 +448,7 @@ function App() {
               )}
             </div>
           </div>
-          <div className="flex flex-force-center items-center py-3">
+          <div className="flex flex-force-center items-center py-4">
             <div className="flex items-center px-1">
               <button
                 type="button"
