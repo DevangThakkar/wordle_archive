@@ -30,7 +30,7 @@ html {
   overscroll-behavior-y: none;
 }
 .h-fill {
-  height: 100vh;
+  height: 100%;
   max-height: -webkit-fill-available;
 }
 
