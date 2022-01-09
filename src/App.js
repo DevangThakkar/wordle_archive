@@ -325,70 +325,7 @@ function App() {
               <Info />
             </button>
           </header>
-          <div className="flex items-center flex-col py-3">
-            <div className="grid grid-cols-5 grid-flow-row gap-4">
-              {board.map((row, rowNumber) =>
-                row.map((letter, colNumber) => (
-                  <span
-                    key={colNumber}
-                    className={`${getCellStyles(
-                      rowNumber,
-                      colNumber,
-                      letter
-                    )} inline-flex items-center font-medium justify-center text-lg w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
-                  >
-                    {letter}
-                  </span>
-                ))
-              )}
-            </div>
-          </div>
-          <InfoModal
-            isOpen={infoModalIsOpen}
-            handleClose={handleInfoClose}
-            darkMode={darkMode}
-            styles={modalStyles}
-          />
-          <EndGameModal
-            isOpen={modalIsOpen}
-            handleClose={closeModal}
-            styles={modalStyles}
-            darkMode={darkMode}
-            gameState={gameState}
-            state={state}
-            currentStreak={currentStreak}
-            longestStreak={longestStreak}
-            answer={answer}
-            playAgain={() => {
-              setAnswer(initialStates.answer)
-              setGameState(initialStates.gameState)
-              setBoard(initialStates.board)
-              setCellStatuses(initialStates.cellStatuses)
-              setCurrentRow(initialStates.currentRow)
-              setCurrentCol(initialStates.currentCol)
-              setLetterStatuses(initialStates.letterStatuses)
-              closeModal()
-              streakUpdated.current = false
-            }}
-            day={day}
-            currentRow={currentRow}
-            cellStatuses={cellStatuses}
-          />
-          <SettingsModal
-            isOpen={settingsModalIsOpen}
-            handleClose={() => setSettingsModalIsOpen(false)}
-            styles={modalStyles}
-            darkMode={darkMode}
-            toggleDarkMode={toggleDarkMode}
-          />
-          <Keyboard
-            letterStatuses={letterStatuses}
-            addLetter={addLetter}
-            onEnterPress={onEnterPress}
-            onDeletePress={onDeletePress}
-            gameDisabled={gameState !== state.playing}
-          />
-          <div className="flex flex-force-center items-center py-4">
+          <div className="flex flex-force-center items-center py-3">
             <div className="flex items-center px-1">
               <button
                 type="button"
@@ -411,26 +348,7 @@ function App() {
               </button>
             </div>
           </div>
-        </div>
-      </div>
-    )
-  }
-  else {
-    return (
-      <div className={darkMode ? 'dark' : ''}>
-        <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
-          <header className="flex items-center py-2 px-3 text-primary dark:text-primary-dark">
-            <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
-              <Settings />
-            </button>
-            <h1 className="flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og">
-              WORDLE ARCHIVE {day}
-            </h1>
-            <button type="button" onClick={() => setInfoModalIsOpen(true)}>
-              <Info />
-            </button>
-          </header>
-          <div className="flex items-center flex-col py-3">
+          <div className="flex items-center flex-col py-4">
             <div className="grid grid-cols-5 grid-flow-row gap-4">
               {board.map((row, rowNumber) =>
                 row.map((letter, colNumber) => (
@@ -493,7 +411,26 @@ function App() {
             onDeletePress={onDeletePress}
             gameDisabled={gameState !== state.playing}
           />
-          <div className="flex flex-force-center items-center py-4">
+        </div>
+      </div>
+    )
+  }
+  else {
+    return (
+      <div className={darkMode ? 'dark' : ''}>
+        <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
+          <header className="flex items-center py-2 px-3 text-primary dark:text-primary-dark">
+            <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
+              <Settings />
+            </button>
+            <h1 className="flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og">
+              WORDLE ARCHIVE {day}
+            </h1>
+            <button type="button" onClick={() => setInfoModalIsOpen(true)}>
+              <Info />
+            </button>
+          </header>
+          <div className="flex flex-force-center items-center py-3">
             <div className="flex items-center px-1">
               <button
                 type="button"
@@ -530,6 +467,69 @@ function App() {
               </button>
             </div>
           </div>
+          <div className="flex items-center flex-col py-4">
+            <div className="grid grid-cols-5 grid-flow-row gap-4">
+              {board.map((row, rowNumber) =>
+                row.map((letter, colNumber) => (
+                  <span
+                    key={colNumber}
+                    className={`${getCellStyles(
+                      rowNumber,
+                      colNumber,
+                      letter
+                    )} inline-flex items-center font-medium justify-center text-lg w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
+                  >
+                    {letter}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+          <InfoModal
+            isOpen={infoModalIsOpen}
+            handleClose={handleInfoClose}
+            darkMode={darkMode}
+            styles={modalStyles}
+          />
+          <EndGameModal
+            isOpen={modalIsOpen}
+            handleClose={closeModal}
+            styles={modalStyles}
+            darkMode={darkMode}
+            gameState={gameState}
+            state={state}
+            currentStreak={currentStreak}
+            longestStreak={longestStreak}
+            answer={answer}
+            playAgain={() => {
+              setAnswer(initialStates.answer)
+              setGameState(initialStates.gameState)
+              setBoard(initialStates.board)
+              setCellStatuses(initialStates.cellStatuses)
+              setCurrentRow(initialStates.currentRow)
+              setCurrentCol(initialStates.currentCol)
+              setLetterStatuses(initialStates.letterStatuses)
+              closeModal()
+              streakUpdated.current = false
+            }}
+            day={day}
+            currentRow={currentRow}
+            cellStatuses={cellStatuses}
+          />
+          <SettingsModal
+            isOpen={settingsModalIsOpen}
+            handleClose={() => setSettingsModalIsOpen(false)}
+            styles={modalStyles}
+            darkMode={darkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+          <Keyboard
+            letterStatuses={letterStatuses}
+            addLetter={addLetter}
+            onEnterPress={onEnterPress}
+            onDeletePress={onDeletePress}
+            gameDisabled={gameState !== state.playing}
+          />
         </div>
       </div>
     )
