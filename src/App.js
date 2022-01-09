@@ -318,7 +318,7 @@ function App() {
             <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
               <Settings />
             </button>
-            <h1 className="flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og">
+            <h1 className="flex-1 text-center text-l xxs:text-xl -mr-6 sm:text-3xl tracking-wide font-bold font-og">
               WORDLE ARCHIVE {day}
             </h1>
             <button type="button" onClick={() => setInfoModalIsOpen(true)}>
