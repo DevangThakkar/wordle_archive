@@ -28,6 +28,7 @@ body,
 html {
   /* Prevent overscroll on chrome (not supported on safari) */
   overscroll-behavior-y: none;
+  height: 100%;
 }
 .h-fill {
   height: 100%;
