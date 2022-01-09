@@ -312,7 +312,7 @@ function App() {
 
   if (window.innerWidth < 600) {
     return (
-      <div className={darkMode ? 'dark' : ''}>
+      <div className={darkMode ? 'dark h-fill' : 'h-fill'}>
         <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
           <header className="flex items-center py-2 px-3 text-primary dark:text-primary-dark">
             <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
@@ -417,7 +417,7 @@ function App() {
   }
   else {
     return (
-      <div className={darkMode ? 'dark' : ''}>
+      <div className={darkMode ? 'dark h-fill' : 'h-fill'}>
         <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
           <header className="flex items-center py-2 px-3 text-primary dark:text-primary-dark">
             <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
