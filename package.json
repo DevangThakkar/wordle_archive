@@ -2,7 +2,7 @@
   "name": "word-master",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://www.deavngthakkar.com/wordle_archive",
+  "homepage": "https://www.devangthakkar.com/wordle_archive",
   "dependencies": {
     "@headlessui/react": "^1.4.2",
     "@testing-library/jest-dom": "^5.16.1",
