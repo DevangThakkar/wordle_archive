@@ -2,7 +2,7 @@
 
 🔗 https://www.devangthakkar.com/wordle_archive/
 
-An archive for [Wordle](https://www.powerlanguage.co.uk/wordle/) by [Josh Wardle](https://twitter.com/powerlanguish) and built on top of [Word Master](https://octokatherine.github.io/word-master/) created by [Katherine Peterson](https://twitter.com/katherinecodes), Wordle Archive is ... simply an archive of past Wordles. I created this because I wanted to go back to Wordles that I had missed.
+An archive for [Wordle](https://www.powerlanguage.co.uk/wordle/) by [Josh Wardle](https://twitter.com/powerlanguish) and built on top of [Word Master](https://octokatherine.github.io/word-master/) created by [Katherine Peterson](https://twitter.com/katherinecodes), Wordle Archive is ... simply a rememberance of wordles past. I created this because I wanted to go back to Wordles that I had missed.
 
 ## How did I do it?
 
