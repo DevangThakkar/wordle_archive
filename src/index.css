@@ -28,7 +28,10 @@ body,
 html {
   /* Prevent overscroll on chrome (not supported on safari) */
   overscroll-behavior-y: none;
-  /*height: 100%;*/
+  min-height: 100%;
+}
+#root{
+  height: 100%;
 }
 .h-fill {
   height: 100%;
