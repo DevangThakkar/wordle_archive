@@ -6,7 +6,7 @@ An archive for [Wordle](https://www.powerlanguage.co.uk/wordle/) by [Josh Wardle
 
 ## How did I do it?
 
-This project would not have been possible without [Selenium](https://github.com/SeleniumHQ/selenium) and [libfaketime](libfaketime). I figured out that if I changed my computer time to a previous date, I could trick Wordle into allowing me to access the Wordle for the day. I was not ready to do that manually for 200+ Wordles so far, so I am glad `libfaketime` exists. I have the answers in plain text in the source code because I don't care, especially since there are many ways to cheat already.
+This project would not have been possible without [Selenium](https://github.com/SeleniumHQ/selenium). I figured out that if I changed my computer time to a previous date, I could trick Wordle into allowing me to access the Wordle for the day. I was not ready to do that manually for 200+ Wordles so far, so I am glad `libfaketime` exists. I have the answers in plain text in the source code because I don't care, especially since there are many ways to cheat already.
 
 ## Rules
 
