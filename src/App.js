@@ -290,11 +290,13 @@ function App() {
     play()
   }
   const playPrevious = () => {
-    day = day - 1
+    if (day > 1) {
+      day = day - 1
+    }
     play()
   }
   const playRandom = () => {
-    day = Math.floor(Math.random() * og_day)
+    day = Math.floor(Math.random() * (og_day-1))+1
     play()
   }
   const playNext = () => {
