@@ -296,7 +296,7 @@ function App() {
     play()
   }
   const playRandom = () => {
-    day = Math.floor(Math.random() * (og_day-1))+1
+    day = Math.floor(Math.random() * (og_day-1)) + 1
     play()
   }
   const playNext = () => {
