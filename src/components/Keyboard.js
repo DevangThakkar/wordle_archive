@@ -9,9 +9,9 @@ const Keyboard = ({ letterStatuses, addLetter, onEnterPress, onDeletePress, game
       case status.yellow:
         return 'bg-yellow-500 text-gray-50'
       case status.gray:
-        return 'bg-n-gray text-gray-50'
+        return 'bg-n-gray dark:bg-gray-700 text-gray-50'
       default:
-        return 'text-primary dark:text-primary-dark'
+        return 'dark:bg-n-gray text-primary dark:text-primary-dark'
     }
   }
 

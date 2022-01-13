@@ -11,6 +11,12 @@ import { InfoModal } from './components/InfoModal'
 import { SettingsModal } from './components/SettingsModal'
 import { EndGameModal } from './components/EndGameModal'
 
+import { Menu, Transition } from '@headlessui/react'
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
 const state = {
   playing: 'playing',
   won: 'won',
@@ -32,6 +38,10 @@ const getDay = () => {
 const wordle_answers = ["rebut", "sissy", "humph", "awake", "blush", "focal", "evade", "naval", "serve", "heath", "dwarf", "model", "karma", "stink", "grade", "quiet", "bench", "abate", "feign", "major", "death", "fresh", "crust", "stool", "colon", "abase", "marry", "react", "batty", "pride", "floss", "helix", "croak", "staff", "paper", "unfed", "whelp", "trawl", "outdo", "adobe", "crazy", "sower", "repay", "digit", "crate", "cluck", "spike", "mimic", "pound", "maxim", "linen", "unmet", "flesh", "booby", "forth", "first", "stand", "belly", "ivory", "seedy", "print", "yearn", "drain", "bribe", "stout", "panel", "crass", "flume", "offal", "agree", "error", "swirl", "argue", "bleed", "delta", "flick", "totem", "wooer", "front", "shrub", "parry", "biome", "lapel", "start", "greet", "goner", "golem", "lusty", "loopy", "round", "audit", "lying", "gamma", "labor", "islet", "civic", "forge", "corny", "moult", "basic", "salad", "agate", "spicy", "spray", "essay", "fjord", "spend", "kebab", "guild", "aback", "motor", "alone", "hatch", "hyper", "thumb", "dowry", "ought", "belch", "dutch", "pilot", "tweed", "comet", "jaunt", "enema", "steed", "abyss", "growl", "fling", "dozen", "boozy", "erode", "world", "gouge", "click", "briar", "great", "altar", "pulpy", "blurt", "coast", "duchy", "groin", "fixer", "group", "rogue", "badly", "smart", "pithy", "gaudy", "chill", "heron", "vodka", "finer", "surer", "radio", "rouge", "perch", "retch", "wrote", "clock", "tilde", "store", "prove", "bring", "solve", "cheat", "grime", "exult", "usher", "epoch", "triad", "break", "rhino", "viral", "conic", "masse", "sonic", "vital", "trace", "using", "peach", "champ", "baton", "brake", "pluck", "craze", "gripe", "weary", "picky", "acute", "ferry", "aside", "tapir", "troll", "unify", "rebus", "boost", "truss", "siege", "tiger", "banal", "slump", "crank", "gorge", "query", "drink", "favor", "abbey", "tangy", "panic", "solar", "shire", "proxy", "point", "robot", "prick", "wince", "crimp", "knoll", "sugar", "whack", "mount", "perky", "could", "wrung", "light", "those", "moist", "shard", "pleat", "aloft", "skill", "elder", "frame", "humor", "pause", "ulcer", "ultra", "robin", "cynic", "agora", "aroma", "caulk", "shake", "pupal", "dodge", "swill", "tacit", "other", "thorn", "trove", "bloke", "vivid", "spill", "chant", "choke", "rupee", "nasty", "mourn", "ahead", "brine", "cloth", "hoard", "sweet", "month", "lapse", "watch", "today", "focus", "smelt", "tease", "cater", "movie", "lynch", "saute", "allow", "renew", "their", "slosh", "purge", "chest", "depot", "epoxy", "nymph", "found", "shall", "harry", "stove", "lowly", "snout", "trope", "fewer", "shawl", "natal", "fibre", "comma", "foray", "scare", "stair", "black", "squad", "royal", "chunk", "mince", "slave", "shame", "cheek", "ample", "flair", "foyer", "cargo", "oxide", "plant", "olive", "inert", "askew", "heist", "shown", "zesty", "hasty", "trash", "fella", "larva", "forgo", "story", "hairy", "train", "homer", "badge", "midst", "canny", "fetus", "butch", "farce", "slung", "tipsy", "metal", "yield", "delve", "being", "scour", "glass", "gamer", "scrap", "money", "hinge", "album", "vouch", "asset", "tiara", "crept", "bayou", "atoll", "manor", "creak", "showy", "phase", "froth", "depth", "gloom", "flood", "trait", "girth", "piety", "payer", "goose", "float", "donor", "atone", "primo", "apron", "blown", "cacao", "loser", "input", "gloat", "awful", "brink", "smite", "beady", "rusty", "retro", "droll", "gawky", "hutch", "pinto", "gaily", "egret", "lilac", "sever", "field", "fluff", "hydro", "flack", "agape", "wench", "voice", "stead", "stalk", "berth", "madam", "night", "bland", "liver", "wedge", "augur", "roomy", "wacky", "flock", "angry", "bobby", "trite", "aphid", "tryst", "midge", "power", "elope", "cinch", "motto", "stomp", "upset", "bluff", "cramp", "quart", "coyly", "youth", "rhyme", "buggy", "alien", "smear", "unfit", "patty", "cling", "glean", "label", "hunky", "khaki", "poker", "gruel", "twice", "twang", "shrug", "treat", "unlit", "waste", "merit", "woven", "octal", "needy", "clown", "widow", "irony", "ruder", "gauze", "chief", "onset", "prize", "fungi", "charm", "gully", "inter", "whoop", "taunt", "leery", "class", "theme", "lofty", "tibia", "booze", "alpha", "thyme", "eclat", "doubt", "parer", "chute", "stick", "trice", "alike", "sooth", "recap", "saint", "liege", "glory", "grate", "admit", "brisk", "soggy", "usurp", "scald", "scorn", "leave", "twine", "sting", "bough", "marsh", "sloth", "dandy", "vigor", "howdy", "enjoy"]
 var day = getDay()
 const og_day = getDay()
+var items_list = []
+for (var i=1;i<=og_day;i++) {
+  items_list.push(i)
+}
 
 function App() {
   const initialStates = {
@@ -128,6 +138,7 @@ function App() {
   }
 
   const addLetter = (letter) => {
+    document.activeElement.blur()
     setSubmittedInvalidWord(false)
     setBoard((prev) => {
       if (currentCol > 4) {
@@ -309,8 +320,10 @@ function App() {
     day = og_day
     play()
   }
-
-  console.log(window.innerWidth)
+  const playDay = (i) => {
+    day = i
+    play()
+  }
 
   if (window.innerWidth < 600) {
     return (
@@ -328,7 +341,7 @@ function App() {
             </button>
           </header>
           <div className="flex flex-force-center items-center py-3">
-            <div className="flex items-center px-1">
+            <div className="flex items-center px-2">
               <button
                 type="button"
                 className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
@@ -342,7 +355,7 @@ function App() {
                 onClick={playRandom}>Random
               </button>
             </div>
-            <div className="flex items-center px-3">
+            <div className="flex items-center px-2">
               <button
                 type="button"
                 className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
@@ -360,7 +373,7 @@ function App() {
                       rowNumber,
                       colNumber,
                       letter
-                    )} inline-flex items-center font-medium justify-center text-lg w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
+                    )} inline-flex items-center font-medium justify-center text-xl w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
                   >
                     {letter}
                   </span>
@@ -418,6 +431,22 @@ function App() {
     )
   }
   else {
+    var elements = items_list.map(i => {
+      return (
+        <Menu.Item key={i}>
+          {({ active }) => 
+            (
+              <a onMouseDown={() => playDay(i)} className=
+                {
+                  classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')
+                }>{i}
+              </a>
+            )
+          }
+        </Menu.Item>
+      );
+    });
+
     return (
       <div className={darkMode ? 'dark h-fill' : 'h-fill'}>
         <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
@@ -433,38 +462,45 @@ function App() {
             </button>
           </header>
           <div className="flex flex-force-center items-center py-3">
-            <div className="flex items-center px-1">
+            <div className="flex items-center px-3">
               <button
                 type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                className="rounded px-3 py-2 mt-4 w-32 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
                 onClick={playFirst}>First
-              </button>
-            </div>
-            <div className="flex items-center px-2">
-              <button
-                type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playPrevious}>Previous
               </button>
             </div>
             <div className="flex items-center px-3">
               <button
                 type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
-                onClick={playRandom}>Random
+                className="rounded px-3 py-2 mt-4 w-32 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playPrevious}>Previous
               </button>
             </div>
-            <div className="flex items-center px-4">
+            <div className="flex items-center px-3">
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="blurthis rounded px-3 py-2 mt-4 w-32 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark">
+                    Choose
+                  </Menu.Button>
+                </div>
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-y-scroll h-56">
+                    <div className="py-1">
+                      {elements}
+                    </div>
+                  </Menu.Items>
+              </Menu>
+            </div>
+            <div className="flex items-center px-3">
               <button
                 type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                className="rounded px-3 py-2 mt-4 w-32 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
                 onClick={playNext}>Next
               </button>
             </div>
-            <div className="flex items-center px-5">
+            <div className="flex items-center px-3">
               <button
                 type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                className="rounded px-3 py-2 mt-4 w-32 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
                 onClick={playLast}>Last
               </button>
             </div>
@@ -479,7 +515,7 @@ function App() {
                       rowNumber,
                       colNumber,
                       letter
-                    )} inline-flex items-center font-medium justify-center text-lg w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
+                    )} inline-flex items-center font-bold justify-center text-3xl w-[14vw] h-[14vw] xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded`}
                   >
                     {letter}
                   </span>
