@@ -485,6 +485,17 @@ function App() {
                 </div>
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-y-scroll h-56">
                     <div className="py-1">
+                      <Menu.Item key={i}>
+                        {({ active }) => 
+                          (
+                            <a onMouseDown={() => playRandom()} className=
+                              {
+                                classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')
+                              }>Random
+                            </a>
+                          )
+                        }
+                      </Menu.Item>
                       {elements}
                     </div>
                   </Menu.Items>
