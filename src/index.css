@@ -50,3 +50,9 @@ html {
   align-items: center;
   justify-content: center;
 }
+.dark-bg {
+  background-color: hsl(231, 16%, 25%);
+}
+.bg {
+  background-color: hsl(231, 16%, 92%);
+}

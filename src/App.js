@@ -90,7 +90,9 @@ function App() {
   }
 
   const [darkMode, setDarkMode] = useLocalStorage('dark-mode', false)
-  const toggleDarkMode = () => setDarkMode((prev) => !prev)
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev)
+  }
 
   useEffect(() => {
     if (gameState !== state.playing) {
@@ -325,6 +327,31 @@ function App() {
     play()
   }
 
+  var elements = items_list.map(i => {
+    return (
+      <Menu.Item key={i}>
+        {({ active }) => 
+          (
+            <a onMouseDown={() => playDay(i)} className=
+              {
+                classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')
+              }>{i}
+            </a>
+          )
+        }
+      </Menu.Item>
+    );
+  });
+
+  if (darkMode == true) {
+    var html = document.getElementsByTagName( 'html' )[0]; // '0' to assign the first (and only `HTML` tag)
+    html.setAttribute( 'class', 'dark-bg' );
+  }
+  else {
+    var html = document.getElementsByTagName( 'html' )[0]; // '0' to assign the first (and only `HTML` tag)
+    html.setAttribute( 'class', 'bg' );
+  }
+
   if (window.innerWidth < 600) {
     return (
       <div className={darkMode ? 'dark h-fill' : 'h-fill'}>
@@ -344,22 +371,52 @@ function App() {
             <div className="flex items-center px-2">
               <button
                 type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                className="rounded px-2 py-2 mt-2 w-24 text-sm nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
                 onClick={playPrevious}>Previous
               </button>
             </div>
             <div className="flex items-center px-2">
               <button
                 type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                className="rounded px-2 py-2 mt-2 w-24 text-sm nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
                 onClick={playRandom}>Random
               </button>
             </div>
             <div className="flex items-center px-2">
               <button
                 type="button"
-                className="rounded px-6 py-2 mt-8 text-lg nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                className="rounded px-2 py-2 mt-2 w-24 text-sm nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
                 onClick={playNext}>Next
+              </button>
+            </div>
+          </div>
+           <div className="flex flex-force-center items-center py-3">
+            <div className="flex items-center px-2">
+              <button
+                type="button"
+                className="rounded px-2 py-2 w-24 text-sm nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playFirst}>First
+              </button>
+            </div>
+            <div className="flex items-center px-2">
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="blurthis rounded px-2 py-2 w-24 text-sm nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark">
+                    Choose
+                  </Menu.Button>
+                </div>
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-42 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none overflow-y-scroll h-56">
+                    <div className="py-1">
+                      {elements}
+                    </div>
+                  </Menu.Items>
+              </Menu>
+            </div>
+            <div className="flex items-center px-2">
+              <button
+                type="button"
+                className="rounded px-2 py-2 w-24 text-sm nm-flat-background dark:nm-flat-background-dark hover:nm-inset-background dark:hover:nm-inset-background-dark text-primary dark:text-primary-dark"
+                onClick={playLast}>Last
               </button>
             </div>
           </div>
@@ -431,22 +488,6 @@ function App() {
     )
   }
   else {
-    var elements = items_list.map(i => {
-      return (
-        <Menu.Item key={i}>
-          {({ active }) => 
-            (
-              <a onMouseDown={() => playDay(i)} className=
-                {
-                  classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')
-                }>{i}
-              </a>
-            )
-          }
-        </Menu.Item>
-      );
-    });
-
     return (
       <div className={darkMode ? 'dark h-fill' : 'h-fill'}>
         <div className={`flex flex-col justify-between h-fill bg-background dark:bg-background-dark`}>
