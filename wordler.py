@@ -12,6 +12,8 @@ driver = webdriver.Chrome(path, options=Options().add_argument('ignore-certifica
 
 driver.get("https://www.powerlanguage.co.uk/wordle/")
 
+sleep(3)
+
 close_button = driver.execute_script("return document.querySelector('game-app').shadowRoot.querySelector('game-theme-manager').querySelector('#game').querySelector('game-modal').shadowRoot.querySelector('.close-icon')")
 close_button.click()
 
