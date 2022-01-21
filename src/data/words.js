@@ -573,6 +573,7 @@ const words = {
   arval: true,
   arvee: true,
   arvos: true,
+  aryan: true,
   aryls: true,
   asana: true,
   ascon: true,
