@@ -35,6 +35,22 @@ export const EndGameModal = ({
     )
   }
 
+  function getOccurrence(array, value) {
+    var count = 0
+    if (array) {
+      for (let i=0; i<array.length; i++) {
+        if (array[i] == value) {
+          count += 1
+        }
+      }
+    }
+    return count
+  }
+
+  const gameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+  var wins = getOccurrence(gameStateList, 'won')
+  var losses = getOccurrence(gameStateList, 'lost')
+
   const ShareButton = (props) => {
     const [buttonPressed, setButtonPressed] = useState(false)
     useEffect(() => {
@@ -49,7 +65,7 @@ export const EndGameModal = ({
         onClick={() => {
           setButtonPressed(true)
           navigator.clipboard.writeText(
-            `Wordle ${day} ${currentRow}/6\n\n` +
+            `Wordle ${day} ${gameState === state.won ? currentRow: 'X'}/6\n\n` +
               cellStatuses
                 .map((row) => {
                   if (row.every((item) => item !== status.unguessed)) {
@@ -94,6 +110,12 @@ export const EndGameModal = ({
             <>
               <img src={Success} alt="success" height="auto" width="auto" />
               <h1 className=" text-3xl">Congrats!</h1>
+              <p className="mt-3 text-2xl">
+                Won: {wins}
+              </p>
+              <p className="mt-3 text-2xl">
+                Lost: {losses}
+              </p>
             </>
           )}
           {gameState === state.lost && (
@@ -103,6 +125,12 @@ export const EndGameModal = ({
                 <p>Oops!</p>
                 <p className="mt-3 text-2xl">
                   The word was <strong>{answer}</strong>
+                </p>
+                <p className="mt-3 text-2xl">
+                  Won: {wins}
+                </p>
+                <p className="mt-3 text-2xl">
+                  Lost: {losses}
                 </p>
               </div>
             </>

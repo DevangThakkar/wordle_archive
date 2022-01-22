@@ -44,6 +44,9 @@ for (var i=1;i<=og_day;i++) {
 }
 
 function App() {
+
+  const reloadCount = Number(sessionStorage.getItem('reloadCount')) || 0;
+
   const initialStates = {
     answer: () => getDayAnswer(day),
     gameState: state.playing,
@@ -66,8 +69,10 @@ function App() {
       return letterStatuses
     },
   }
+
   const [answer, setAnswer] = useState(initialStates.answer)
   const [gameState, setGameState] = useState(initialStates.gameState)
+  const [gameStateList, setGameStateList] = useLocalStorage('gameStateList', Array(500).fill(initialStates.gameState))
   const [board, setBoard] = useState(initialStates.board)
   const [cellStatuses, setCellStatuses] = useState(initialStates.cellStatuses)
   const [currentRow, setCurrentRow] = useState(initialStates.currentRow)
@@ -116,6 +121,21 @@ function App() {
       }
     }
   }, [gameState, currentStreak, longestStreak, setLongestStreak, setCurrentStreak])
+
+  useEffect(() => {
+    if (localStorage.getItem('gameStateList') == null) {
+      setGameStateList(gameStateList)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (reloadCount < 1) {
+      window.location.reload(true);
+      sessionStorage.setItem('reloadCount', String(reloadCount + 1));
+    } else {
+      sessionStorage.removeItem('reloadCount');
+    }
+  }, [og_day])
 
   const getCellStyles = (rowNumber, colNumber, letter) => {
     if (rowNumber === currentRow) {
@@ -234,8 +254,14 @@ function App() {
 
     if (lastFilledRow && isRowAllGreen(lastFilledRow)) {
       setGameState(state.won)
+      var newGameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+      newGameStateList[day-1] = state.won
+      localStorage.setItem('gameStateList', JSON.stringify(newGameStateList))
     } else if (currentRow === 6) {
       setGameState(state.lost)
+      var newGameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+      newGameStateList[day-1] = state.lost
+      localStorage.setItem('gameStateList', JSON.stringify(newGameStateList))
     }
   }, [cellStatuses, currentRow])
 
@@ -327,6 +353,25 @@ function App() {
     play()
   }
 
+  var tempGameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+  if (tempGameStateList == null) {
+    setGameStateList(gameStateList)
+    tempGameStateList = gameStateList
+  }
+  for (var i=4;i<=og_day+3;i++) {
+    var textNumber = document.getElementById('headlessui-menu-item-'+i)
+    if(textNumber != null) {
+      if (tempGameStateList[i-1] == state.won) {
+        textNumber.classList.add('green-text');
+      }
+      if (tempGameStateList[i-1] == state.lost) {
+        textNumber.classList.add('red-text');
+      }
+    }
+  }
+
+  var header_symbol = (tempGameStateList[day-1] == 'won') ? ('✔') : ((tempGameStateList[day-1] == 'lost') ? ('✘') : '')
+
   var elements = items_list.map(i => {
     return (
       <Menu.Item key={i}>
@@ -334,8 +379,8 @@ function App() {
           (
             <a onMouseDown={() => playDay(i)} className=
               {
-                classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')
-              }>{i}
+                classNames(active ? 'font-bold text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm '+tempGameStateList[i-1])
+              }>{i+((tempGameStateList[i-1] == state.won) ? ' ✔' : ((tempGameStateList[i-1] == state.lost) ? ' ✘' : ''))}
             </a>
           )
         }
@@ -360,8 +405,8 @@ function App() {
             <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
               <Settings />
             </button>
-            <h1 className="flex-1 text-center text-l xxs:text-xl -mr-6 sm:text-3xl tracking-wide font-bold font-og">
-              WORDLE ARCHIVE {day}
+            <h1 className={"flex-1 text-center text-l xxs:text-xl -mr-6 sm:text-3xl tracking-wide font-bold font-og"}>
+              WORDLE ARCHIVE {day} {header_symbol}
             </h1>
             <button type="button" onClick={() => setInfoModalIsOpen(true)}>
               <Info />
@@ -455,13 +500,6 @@ function App() {
             longestStreak={longestStreak}
             answer={answer}
             playAgain={() => {
-              // setAnswer(initialStates.answer)
-              // setGameState(initialStates.gameState)
-              // setBoard(initialStates.board)
-              // setCellStatuses(initialStates.cellStatuses)
-              // setCurrentRow(initialStates.currentRow)
-              // setCurrentCol(initialStates.currentCol)
-              // setLetterStatuses(initialStates.letterStatuses)
               closeModal()
               streakUpdated.current = false
             }}
@@ -495,8 +533,8 @@ function App() {
             <button type="button" onClick={() => setSettingsModalIsOpen(true)}>
               <Settings />
             </button>
-            <h1 className="flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og">
-              WORDLE ARCHIVE {day}
+            <h1 className={"flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og"}>
+              WORDLE ARCHIVE {day}  {header_symbol}
             </h1>
             <button type="button" onClick={() => setInfoModalIsOpen(true)}>
               <Info />
@@ -531,7 +569,7 @@ function App() {
                           (
                             <a onMouseDown={() => playRandom()} className=
                               {
-                                classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')
+                                classNames(active ? 'font-bold text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')
                               }>Random
                             </a>
                           )
@@ -592,13 +630,6 @@ function App() {
             longestStreak={longestStreak}
             answer={answer}
             playAgain={() => {
-              // setAnswer(initialStates.answer)
-              // setGameState(initialStates.gameState)
-              // setBoard(initialStates.board)
-              // setCellStatuses(initialStates.cellStatuses)
-              // setCurrentRow(initialStates.currentRow)
-              // setCurrentCol(initialStates.currentCol)
-              // setLetterStatuses(initialStates.letterStatuses)
               closeModal()
               streakUpdated.current = false
             }}

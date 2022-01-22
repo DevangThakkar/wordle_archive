@@ -56,3 +56,27 @@ html {
 .bg {
   background-color: hsl(231, 16%, 92%);
 }
+
+.green-text {
+  color: #086e23;
+}
+
+.red-text {
+  color: #6e1a08;
+}
+
+.green-text-dark {
+  color: #b5ffc9;
+}
+
+.red-text-dark {
+  color: #ffc8c2;
+}
+
+.won {
+  background-color: #b5ffc9;
+}
+
+.lost {
+  background-color: #ffc8c2;
+}
