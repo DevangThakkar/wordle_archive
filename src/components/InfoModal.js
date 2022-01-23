@@ -4,7 +4,7 @@ import Modal from 'react-modal'
 
 Modal.setAppElement('#root')
 
-export const InfoModal = ({ isOpen, handleClose, darkMode, styles }) => (
+export const InfoModal = ({ isOpen, handleClose, darkMode, colorBlindMode, styles }) => (
   <Modal isOpen={isOpen} onRequestClose={handleClose} style={styles} contentLabel="Game Info Modal">
     <div className={`h-full ${darkMode ? 'dark' : ''}`}>
       <button
@@ -26,19 +26,20 @@ export const InfoModal = ({ isOpen, handleClose, darkMode, styles }) => (
           <ul className="list-disc pl-5 block sm:text-base text-sm">
             <li className="mt-6 mb-2">You have 6 guesses to guess the correct word.</li>
             <li className="mb-2">You can guess any valid word.</li>
-            <li className="mb-2">
-              After each guess, each letter will turn green, yellow, or gray.
+            <li className="mb-2">{
+              `After each guess, each letter will turn ${colorBlindMode ? 'orange, blue or gray.' : 'green, yellow, or gray.'}`
+            }
             </li>
           </ul>
           <div className="mb-3 mt-8 flex items-center">
-            <span className="nm-inset-n-green text-gray-50 inline-flex items-center justify-center text-3x w-10 h-10 rounded-full">
+            <span className={`${colorBlindMode ? 'nm-inset-orange-500' : 'nm-inset-n-green'} text-gray-50 inline-flex items-center justify-center text-3x w-10 h-10 rounded-full`}>
               W
             </span>
             <span className="mx-2">=</span>
             <span>Correct letter, correct spot</span>
           </div>
           <div className="mb-3">
-            <span className="nm-inset-yellow-500 text-gray-50 inline-flex items-center justify-center text-3x w-10 h-10 rounded-full">
+            <span className={`${colorBlindMode ? 'nm-inset-blue-300' : 'nm-inset-yellow-500'} text-gray-50 inline-flex items-center justify-center text-3x w-10 h-10 rounded-full`}>
               W
             </span>
             <span className="mx-2">=</span>

@@ -99,6 +99,11 @@ function App() {
     setDarkMode((prev) => !prev)
   }
 
+  const [colorBlindMode, setColorblindMode] = useLocalStorage('colorblind-mode', false)
+  const toggleColorBlindMode = () => {
+    setColorblindMode((prev) => !prev)
+  }
+
   useEffect(() => {
     if (gameState !== state.playing) {
       setTimeout(() => {
@@ -149,9 +154,19 @@ function App() {
 
     switch (cellStatuses[rowNumber][colNumber]) {
       case status.green:
-        return 'nm-inset-n-green text-gray-50'
+        if (colorBlindMode) {
+          return 'nm-inset-orange-500 text-gray-50'
+        }
+        else {
+          return 'nm-inset-n-green text-gray-50'
+        }
       case status.yellow:
+      if (colorBlindMode) {
+        return 'nm-inset-blue-300 text-gray-50'
+      }
+      else {
         return 'nm-inset-yellow-500 text-gray-50'
+      }
       case status.gray:
         return 'nm-inset-n-gray text-gray-50'
       default:
@@ -487,6 +502,7 @@ function App() {
             isOpen={infoModalIsOpen}
             handleClose={handleInfoClose}
             darkMode={darkMode}
+            colorBlindMode={colorBlindMode}
             styles={modalStyles}
           />
           <EndGameModal
@@ -513,6 +529,8 @@ function App() {
             styles={modalStyles}
             darkMode={darkMode}
             toggleDarkMode={toggleDarkMode}
+            colorBlindMode={colorBlindMode}
+            toggleColorBlindMode={toggleColorBlindMode}
           />
           <Keyboard
             letterStatuses={letterStatuses}
@@ -520,6 +538,7 @@ function App() {
             onEnterPress={onEnterPress}
             onDeletePress={onDeletePress}
             gameDisabled={gameState !== state.playing}
+            colorBlindMode={colorBlindMode}
           />
         </div>
       </div>
@@ -617,6 +636,7 @@ function App() {
             isOpen={infoModalIsOpen}
             handleClose={handleInfoClose}
             darkMode={darkMode}
+            colorBlindMode={colorBlindMode}
             styles={modalStyles}
           />
           <EndGameModal
@@ -643,6 +663,8 @@ function App() {
             styles={modalStyles}
             darkMode={darkMode}
             toggleDarkMode={toggleDarkMode}
+            colorBlindMode={colorBlindMode}
+            toggleColorBlindMode={toggleColorBlindMode}
           />
           <Keyboard
             letterStatuses={letterStatuses}
@@ -650,6 +672,7 @@ function App() {
             onEnterPress={onEnterPress}
             onDeletePress={onDeletePress}
             gameDisabled={gameState !== state.playing}
+            colorBlindMode={colorBlindMode}
           />
         </div>
       </div>

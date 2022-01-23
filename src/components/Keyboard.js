@@ -1,13 +1,23 @@
 import { keyboardLetters, status, letters } from '../constants'
 import { useEffect, useCallback } from 'react'
 
-const Keyboard = ({ letterStatuses, addLetter, onEnterPress, onDeletePress, gameDisabled }) => {
+const Keyboard = ({ letterStatuses, addLetter, onEnterPress, onDeletePress, gameDisabled, colorBlindMode }) => {
   const getKeyStyle = (letter) => {
     switch (letterStatuses[letter]) {
       case status.green:
-        return 'bg-n-green text-gray-50'
+        if (colorBlindMode) {
+          return 'bg-orange-500 text-gray-50'
+        }
+        else {
+          return 'bg-n-green text-gray-50'
+        }
       case status.yellow:
-        return 'bg-yellow-500 text-gray-50'
+        if (colorBlindMode) {
+          return 'bg-blue-300 text-gray-50'
+        }
+        else {
+          return 'bg-yellow-500 text-gray-50'
+        }
       case status.gray:
         return 'bg-n-gray dark:bg-gray-700 text-gray-50'
       default:
