@@ -37,11 +37,12 @@ const setDay = newDay => {
 
 const getDay = (og_day) => {
   const { search } = document.location;
+  var url_day = og_day
   if (search) {
-    try {
-      var url_day = parseInt(search.slice(1).replace('?', ''), 10);
-    } catch {
+    if (isNaN(search.slice(1))) {
       url_day = og_day
+    } else {
+      url_day = parseInt(search.slice(1), 10);
     }
     if (url_day > og_day || url_day < 1) {
       url_day = og_day
