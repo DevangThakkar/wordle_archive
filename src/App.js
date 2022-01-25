@@ -39,8 +39,8 @@ const getDay = (og_day) => {
   const { search } = document.location;
   if (search) {
     try {
-      var url_day = parseInt(search.slice(1), 10);
-    } finally {
+      var url_day = parseInt(search.slice(1).replace('?', ''), 10);
+    } catch {
       url_day = og_day
     }
     if (url_day > og_day || url_day < 1) {
