@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { status } from '../constants'
 import Success from '../data/Success.png'
 import Fail from '../data/Cross.png'
+import WIP from '../data/WIP3.png'
 
 Modal.setAppElement('#root')
 
@@ -131,6 +132,19 @@ export const EndGameModal = ({
                 <p className="mt-3 text-2xl">
                   The word was <strong>{answer}</strong>
                 </p>
+                <p className="mt-3 text-2xl">
+                  Won: {wins}
+                </p>
+                <p className="mt-3 text-2xl">
+                  Lost: {losses}
+                </p>
+              </div>
+            </>
+          )}
+          {gameState === state.playing && (
+            <>
+              <img src={WIP} alt="keep playing" height="auto" width="80%" />
+              <div className="text-primary dark:text-primary-dark text-4xl text-center">
                 <p className="mt-3 text-2xl">
                   Won: {wins}
                 </p>

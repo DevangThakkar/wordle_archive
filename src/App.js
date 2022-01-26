@@ -6,6 +6,7 @@ import words from './data/words'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import { ReactComponent as Info } from './data/Info.svg'
 import { ReactComponent as Settings } from './data/Settings.svg'
+import { ReactComponent as Share } from './data/Share.svg'
 
 import { InfoModal } from './components/InfoModal'
 import { SettingsModal } from './components/SettingsModal'
@@ -433,6 +434,9 @@ function App() {
             <h1 className={"flex-1 text-center text-l xxs:text-xl -mr-6 sm:text-3xl tracking-wide font-bold font-og"}>
               WORDLE ARCHIVE {day} {header_symbol}
             </h1>
+            <button className="mr-2" type="button" onClick={() => setIsOpen(true)}>
+              <Share />
+            </button>
             <button type="button" onClick={() => setInfoModalIsOpen(true)}>
               <Info />
             </button>
@@ -565,6 +569,9 @@ function App() {
             <h1 className={"flex-1 text-center text-xl xxs:text-2xl -mr-6 sm:text-4xl tracking-wide font-bold font-og"}>
               WORDLE ARCHIVE {day}  {header_symbol}
             </h1>
+            <button className="mr-6" type="button" onClick={() => setIsOpen(true)}>
+              <Share />
+            </button>
             <button type="button" onClick={() => setInfoModalIsOpen(true)}>
               <Info />
             </button>
