@@ -74,7 +74,12 @@ export const EndGameModal = ({
                         .map((state) => {
                           switch (state) {
                             case status.gray:
-                              return '⬛'
+                              if (darkMode) {
+                                return '⬛'
+                              }
+                              else {
+                                return '⬜'
+                              }
                             case status.green:
                               return '🟩'
                             case status.yellow:
