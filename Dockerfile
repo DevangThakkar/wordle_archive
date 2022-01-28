@@ -11,6 +11,6 @@ RUN npm run build --dev --configuration=dev && react-scripts build
 # Stage 2 - copy app into unpriviledged nginx container
 #FROM nginx:stable-alpine
 FROM nginxinc/nginx-unprivileged:1.20-alpine
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html/wordle_archive
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
