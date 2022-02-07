@@ -40,7 +40,7 @@ export const EndGameModal = ({
     var count = 0
     if (array) {
       for (let i=0; i<array.length; i++) {
-        if (array[i] == value) {
+        if (array[i].state == value) {
           count += 1
         }
       }
