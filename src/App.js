@@ -116,6 +116,9 @@ function App() {
   const [infoModalIsOpen, setInfoModalIsOpen] = useState(firstTime)
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState(false)
 
+  const currentColRef = useRef();
+  currentColRef.current = currentCol
+
   const openModal = () => setIsOpen(true)
   const closeModal = () => setIsOpen(false)
   const handleInfoClose = () => {
@@ -207,14 +210,15 @@ function App() {
     document.activeElement.blur()
     setSubmittedInvalidWord(false)
     setBoard((prev) => {
-      if (currentCol > 4) {
+      if (currentColRef.current > 4) {
         return prev
       }
       const newBoard = [...prev]
-      newBoard[currentRow][currentCol] = letter
+      console.log("in addLetter: ", currentColRef.current)
+      newBoard[currentRow][currentColRef.current] = letter
       return newBoard
     })
-    if (currentCol < 5) {
+    if (currentColRef.current < 5) {
       setCurrentCol((prev) => prev + 1)
     }
   }
@@ -241,11 +245,11 @@ function App() {
 
   const onDeletePress = () => {
     setSubmittedInvalidWord(false)
-    if (currentCol === 0) return
+    if (currentColRef.current === 0) return
 
     setBoard((prev) => {
       const newBoard = [...prev]
-      newBoard[currentRow][currentCol - 1] = ''
+      newBoard[currentRow][currentColRef.current - 1] = ''
       return newBoard
     })
 
