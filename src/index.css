@@ -77,6 +77,15 @@ html {
   background-color: #b5ffc9;
 }
 
-.lost {
+.won.cleared {
+  background-color: #f8ffb5;
+}
+
+.lost{
   background-color: #ffc8c2;
+}
+
+.is-clear-key {
+  background-color: #ee5858;
+  color: white;
 }

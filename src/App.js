@@ -12,7 +12,7 @@ import { InfoModal } from './components/InfoModal'
 import { SettingsModal } from './components/SettingsModal'
 import { EndGameModal } from './components/EndGameModal'
 
-import { Menu, Transition } from '@headlessui/react'
+import { Menu } from '@headlessui/react'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -63,7 +63,81 @@ const getOGDay = () => {
   return diffDays
 }
 
+const getIsSavedSolution = () => {
+  const gameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+
+  if (gameStateList) {
+    const dayState = gameStateList[day-1]
+    return dayState && dayState.state === state.won && dayState.board !== null
+  }
+
+  return false;
+}
+
+const getIsClearedSolution = (day_) => {
+  const gameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+
+  if (gameStateList) {
+    const dayState = gameStateList[day_-1]
+    return dayState?.state === state.won && dayState?.board === null
+  }
+
+  return false;
+}
+
+const calculateScore = (day_) => {
+  const gameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+
+  if (gameStateList) {
+    const dayState = gameStateList[day_-1];
+    const board = dayState?.board;
+
+    // puzzle was solved before we tracked board state in
+    // local storage. we'll still show the solved puzzle
+    // (on first row) but don't show score since its unknown
+    if (dayState?.scoreUnknown) {
+      return '';
+    }
+
+    const numGuesses = board
+      ? board
+        .flatMap(row => row.join('') ? 1 : 0)
+        .reduce((acc, curr) => acc + curr, 0)
+      : null;
+
+    return numGuesses ? `${numGuesses}/6` : '';
+  }
+
+  return '';
+}
+
+// check if gameStateList is old gameStateList shape (array of strings) and
+// update to new shape (array of objects w/ state and board). if a user has
+// solved a puzzle before this feature was implemented we will show the answer
+// on the first row since we don't know how many guesses they took to win
+const oneTimeGameStateListUpdate = (stringGameStateList) => {
+  const objectGameStateList = stringGameStateList.map((gameState, idx) => {
+    if (gameState === state.won) {
+      return {
+        state: state.won,
+        scoreUnknown: true,
+        board: new Array(6)
+          .fill(wordle_answers[idx].toUpperCase().split(''), 0, 1)
+          .fill(new Array(5).fill(''), 1)
+      }
+    }
+
+    return {
+      state: gameState,
+      board: null
+    }
+  });
+
+  localStorage.setItem('gameStateList', JSON.stringify(objectGameStateList));
+}
+
 const wordle_answers = ["rebut", "sissy", "humph", "awake", "blush", "focal", "evade", "naval", "serve", "heath", "dwarf", "model", "karma", "stink", "grade", "quiet", "bench", "abate", "feign", "major", "death", "fresh", "crust", "stool", "colon", "abase", "marry", "react", "batty", "pride", "floss", "helix", "croak", "staff", "paper", "unfed", "whelp", "trawl", "outdo", "adobe", "crazy", "sower", "repay", "digit", "crate", "cluck", "spike", "mimic", "pound", "maxim", "linen", "unmet", "flesh", "booby", "forth", "first", "stand", "belly", "ivory", "seedy", "print", "yearn", "drain", "bribe", "stout", "panel", "crass", "flume", "offal", "agree", "error", "swirl", "argue", "bleed", "delta", "flick", "totem", "wooer", "front", "shrub", "parry", "biome", "lapel", "start", "greet", "goner", "golem", "lusty", "loopy", "round", "audit", "lying", "gamma", "labor", "islet", "civic", "forge", "corny", "moult", "basic", "salad", "agate", "spicy", "spray", "essay", "fjord", "spend", "kebab", "guild", "aback", "motor", "alone", "hatch", "hyper", "thumb", "dowry", "ought", "belch", "dutch", "pilot", "tweed", "comet", "jaunt", "enema", "steed", "abyss", "growl", "fling", "dozen", "boozy", "erode", "world", "gouge", "click", "briar", "great", "altar", "pulpy", "blurt", "coast", "duchy", "groin", "fixer", "group", "rogue", "badly", "smart", "pithy", "gaudy", "chill", "heron", "vodka", "finer", "surer", "radio", "rouge", "perch", "retch", "wrote", "clock", "tilde", "store", "prove", "bring", "solve", "cheat", "grime", "exult", "usher", "epoch", "triad", "break", "rhino", "viral", "conic", "masse", "sonic", "vital", "trace", "using", "peach", "champ", "baton", "brake", "pluck", "craze", "gripe", "weary", "picky", "acute", "ferry", "aside", "tapir", "troll", "unify", "rebus", "boost", "truss", "siege", "tiger", "banal", "slump", "crank", "gorge", "query", "drink", "favor", "abbey", "tangy", "panic", "solar", "shire", "proxy", "point", "robot", "prick", "wince", "crimp", "knoll", "sugar", "whack", "mount", "perky", "could", "wrung", "light", "those", "moist", "shard", "pleat", "aloft", "skill", "elder", "frame", "humor", "pause", "ulcer", "ultra", "robin", "cynic", "aroma", "caulk", "shake", "dodge", "swill", "tacit", "other", "thorn", "trove", "bloke", "vivid", "spill", "chant", "choke", "rupee", "nasty", "mourn", "ahead", "brine", "cloth", "hoard", "sweet", "month", "lapse", "watch", "today", "focus", "smelt", "tease", "cater", "movie", "saute", "allow", "renew", "their", "slosh", "purge", "chest", "depot", "epoxy", "nymph", "found", "shall", "harry", "stove", "lowly", "snout", "trope", "fewer", "shawl", "natal", "comma", "foray", "scare", "stair", "black", "squad", "royal", "chunk", "mince", "shame", "cheek", "ample", "flair", "foyer", "cargo", "oxide", "plant", "olive", "inert", "askew", "heist", "shown", "zesty", "hasty", "trash", "fella", "larva", "forgo", "story", "hairy", "train", "homer", "badge", "midst", "canny", "fetus", "butch", "farce", "slung", "tipsy", "metal", "yield", "delve", "being", "scour", "glass", "gamer", "scrap", "money", "hinge", "album", "vouch", "asset", "tiara", "crept", "bayou", "atoll", "manor", "creak", "showy", "phase", "froth", "depth", "gloom", "flood", "trait", "girth", "piety", "payer", "goose", "float", "donor", "atone", "primo", "apron", "blown", "cacao", "loser", "input", "gloat", "awful", "brink", "smite", "beady", "rusty", "retro", "droll", "gawky", "hutch", "pinto", "gaily", "egret", "lilac", "sever", "field", "fluff", "hydro", "flack", "agape", "voice", "stead", "stalk", "berth", "madam", "night", "bland", "liver", "wedge", "augur", "roomy", "wacky", "flock", "angry", "bobby", "trite", "aphid", "tryst", "midge", "power", "elope", "cinch", "motto", "stomp", "upset", "bluff", "cramp", "quart", "coyly", "youth", "rhyme", "buggy", "alien", "smear", "unfit", "patty", "cling", "glean", "label", "hunky", "khaki", "poker", "gruel", "twice", "twang", "shrug", "treat", "unlit", "waste", "merit", "woven", "octal", "needy", "clown", "widow", "irony", "ruder", "gauze", "chief", "onset", "prize", "fungi", "charm", "gully", "inter", "whoop", "taunt", "leery", "class", "theme", "lofty", "tibia", "booze", "alpha", "thyme", "eclat", "doubt", "parer", "chute", "stick", "trice", "alike", "sooth", "recap", "saint", "liege", "glory", "grate", "admit", "brisk", "soggy", "usurp", "scald", "scorn", "leave", "twine", "sting", "bough", "marsh", "sloth", "dandy", "vigor", "howdy", "enjoy"]
+
 var day;
 const og_day = getOGDay()
 setDay(getDay(og_day));
@@ -101,7 +175,6 @@ function App() {
 
   const [answer, setAnswer] = useState(initialStates.answer)
   const [gameState, setGameState] = useState(initialStates.gameState)
-  const [gameStateList, setGameStateList] = useLocalStorage('gameStateList', Array(500).fill(initialStates.gameState))
   const [board, setBoard] = useState(initialStates.board)
   const [cellStatuses, setCellStatuses] = useState(initialStates.cellStatuses)
   const [currentRow, setCurrentRow] = useState(initialStates.currentRow)
@@ -115,6 +188,13 @@ function App() {
   const [firstTime, setFirstTime] = useLocalStorage('first-time', true)
   const [infoModalIsOpen, setInfoModalIsOpen] = useState(firstTime)
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState(false)
+  const [isSavedSolution, setIsSavedSolution] = useState(getIsSavedSolution())
+
+  const [gameStateList, setGameStateList] = useLocalStorage(
+    'gameStateList',
+    Array(500).fill({ state: initialStates.gameState, board: null })
+  )
+
 
   const openModal = () => setIsOpen(true)
   const closeModal = () => setIsOpen(false)
@@ -134,12 +214,12 @@ function App() {
   }
 
   useEffect(() => {
-    if (gameState !== state.playing) {
+    if (gameState !== state.playing && !isSavedSolution) {
       setTimeout(() => {
         openModal()
       }, 500)
     }
-  }, [gameState])
+  }, [gameState, isSavedSolution])
 
   useEffect(() => {
     if (!streakUpdated.current) {
@@ -157,9 +237,21 @@ function App() {
   }, [gameState, currentStreak, longestStreak, setLongestStreak, setCurrentStreak])
 
   useEffect(() => {
-    if (localStorage.getItem('gameStateList') == null) {
+    const jsonGameStateList = localStorage.getItem('gameStateList');
+    if (jsonGameStateList == null) {
       setGameStateList(gameStateList)
+    } else {
+      const gameStateList = JSON.parse(jsonGameStateList);
+
+      // address regression impact of gameStateList change
+      // see oneTimeGameStateListUpdate for more info on this
+      if (typeof gameStateList[0] === 'string') {
+        oneTimeGameStateListUpdate(gameStateList);
+      }
     }
+
+    // set to a blank board or the board from a past win
+    setInitialGameState();
   }, [])
 
   useEffect(() => {
@@ -171,8 +263,55 @@ function App() {
     }
   }, [og_day])
 
+  // update letter and cell statuses each time we move onto a
+  // new row and when we switch to a puzzle with a saved solution
+  useEffect(() => {
+    const isGameOver = currentRow === 6;
+    const isEnterPressOrSavedGame = currentRow !== 6 && currentCol === 0 && (
+      board[currentRow][currentCol] === '' || isSavedSolution
+    );
+
+    if (isGameOver || isEnterPressOrSavedGame) {
+      board.forEach((row, idx) => {
+        const word = row.join('')
+
+        if (word) {
+          updateLetterStatuses(word)
+          updateCellStatuses(word, idx)
+        }
+      })
+    }
+  }, [currentCol, currentRow, board])
+
+  const setInitialGameState = () => {
+    const gameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+
+    setAnswer(initialStates.answer)
+    setCurrentRow(initialStates.currentRow)
+    setCurrentCol(initialStates.currentCol)
+    setCellStatuses(initialStates.cellStatuses)
+    setLetterStatuses(initialStates.letterStatuses)
+
+    if (gameStateList && getIsSavedSolution()) {
+      setIsSavedSolution(true)
+      setGameState(state.won)
+      setBoard(gameStateList[day-1].board)
+    } else {
+      setIsSavedSolution(false)
+      setBoard(initialStates.board)
+      setGameState(initialStates.gameState)
+    }
+  }
+
+  const clearSolution = () => {
+    const newGameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+    newGameStateList[day-1].board = null;
+    localStorage.setItem("gameStateList", JSON.stringify(newGameStateList))
+    setInitialGameState();
+  }
+
   const getCellStyles = (rowNumber, colNumber, letter) => {
-    if (rowNumber === currentRow) {
+    if (rowNumber === currentRow && !isSavedSolution) {
       if (letter) {
         return `nm-inset-background dark:nm-inset-background-dark text-primary dark:text-primary-dark ${
           submittedInvalidWord ? 'border border-red-800' : ''
@@ -233,8 +372,6 @@ function App() {
 
     if (currentRow === 6) return
 
-    updateCellStatuses(word, currentRow)
-    updateLetterStatuses(word)
     setCurrentRow((prev) => prev + 1)
     setCurrentCol(0)
   }
@@ -296,15 +433,20 @@ function App() {
       return r[0] !== status.unguessed
     })
 
-    if (lastFilledRow && isRowAllGreen(lastFilledRow)) {
-      setGameState(state.won)
-      var newGameStateList = JSON.parse(localStorage.getItem('gameStateList'))
-      newGameStateList[day-1] = state.won
-      localStorage.setItem('gameStateList', JSON.stringify(newGameStateList))
-    } else if (currentRow === 6) {
-      setGameState(state.lost)
-      var newGameStateList = JSON.parse(localStorage.getItem('gameStateList'))
-      newGameStateList[day-1] = state.lost
+    // don't update game state for already won games
+    if (!isSavedSolution) {
+      const newGameStateList = JSON.parse(localStorage.getItem('gameStateList'))
+      const dayState = newGameStateList[day-1]
+
+      if (lastFilledRow && isRowAllGreen(lastFilledRow)) {
+        setGameState(state.won)
+        dayState.board = board
+        dayState.state = state.won
+        dayState.scoreUnknown = false;
+      } else if (currentRow === 6) {
+        setGameState(state.lost)
+        dayState.state = state.lost
+      }
       localStorage.setItem('gameStateList', JSON.stringify(newGameStateList))
     }
   }, [cellStatuses, currentRow])
@@ -359,15 +501,6 @@ function App() {
     },
   }
 
-  const play = () => {
-    setAnswer(initialStates.answer)
-    setGameState(initialStates.gameState)
-    setBoard(initialStates.board)
-    setCellStatuses(initialStates.cellStatuses)
-    setCurrentRow(initialStates.currentRow)
-    setCurrentCol(initialStates.currentCol)
-    setLetterStatuses(initialStates.letterStatuses)
-  }
   const playFirst = () => playDay(1)
   const playPrevious = () => playDay(day - 1)
   const playRandom = () => playDay(Math.floor(Math.random() * (og_day-1)) + 1)
@@ -376,7 +509,7 @@ function App() {
 
   const playDay = (i) => {
     setDay(i)
-    play()
+    setInitialGameState()
   }
 
   var tempGameStateList = JSON.parse(localStorage.getItem('gameStateList'))
@@ -387,27 +520,35 @@ function App() {
   for (var i=4;i<=og_day+3;i++) {
     var textNumber = document.getElementById('headlessui-menu-item-'+i)
     if(textNumber != null) {
-      if (tempGameStateList[i-1] == state.won) {
+      if (tempGameStateList[i-1].state == state.won) {
         textNumber.classList.add('green-text');
       }
-      if (tempGameStateList[i-1] == state.lost) {
+      if (tempGameStateList[i-1].state == state.lost) {
         textNumber.classList.add('red-text');
       }
     }
   }
 
-  var header_symbol = (tempGameStateList[day-1] == 'won') ? ('✔') : ((tempGameStateList[day-1] == 'lost') ? ('✘') : '')
+  var header_symbol = (tempGameStateList[day-1].state == 'won') ? ('✔') : ((tempGameStateList[day-1].state == 'lost') ? ('✘') : '')
 
   var elements = items_list.map(i => {
     return (
       <Menu.Item key={i}>
         {({ active }) =>
           (
-            <a onMouseDown={() => playDay(i)} className=
-              {
-                classNames(active ? 'font-bold text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm '+tempGameStateList[i-1])
-              }>{i+((tempGameStateList[i-1] == state.won) ? ' ✔' : ((tempGameStateList[i-1] == state.lost) ? ' ✘' : ''))}
-            </a>
+            <button onClick={() => playDay(i)} className={classNames(
+              tempGameStateList[i-1].state,
+              getIsClearedSolution(i) ? "cleared" : "",
+              active ? 'font-bold text-gray-900' : 'text-gray-700',
+              'flex justify-between block px-4 py-2 text-sm w-full',
+            )}>
+                <span>
+                  {i+(tempGameStateList[i-1].state == state.won ? ' ✔' : tempGameStateList[i-1].state == state.lost ? ' ✘' : '')}
+                </span>
+                <span>
+                  {calculateScore(i)}
+                </span>
+            </button>
           )
         }
       </Menu.Item>
@@ -547,6 +688,8 @@ function App() {
             toggleColorBlindMode={toggleColorBlindMode}
           />
           <Keyboard
+            isSolved={gameState === state.won}
+            onClear={clearSolution}
             letterStatuses={letterStatuses}
             addLetter={addLetter}
             onEnterPress={onEnterPress}
@@ -603,11 +746,9 @@ function App() {
                       <Menu.Item key={i}>
                         {({ active }) =>
                           (
-                            <a onMouseDown={() => playRandom()} className=
-                              {
-                                classNames(active ? 'font-bold text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')
-                              }>Random
-                            </a>
+                            <button onClick={() => playRandom()} className={classNames(active ? 'font-bold text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm w-full text-left')}>
+                              Random
+                            </button>
                           )
                         }
                       </Menu.Item>
@@ -684,6 +825,8 @@ function App() {
             toggleColorBlindMode={toggleColorBlindMode}
           />
           <Keyboard
+            isSolved={gameState === state.won}
+            onClear={clearSolution}
             letterStatuses={letterStatuses}
             addLetter={addLetter}
             onEnterPress={onEnterPress}

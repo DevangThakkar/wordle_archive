@@ -1,7 +1,7 @@
 import { keyboardLetters, status, letters } from '../constants'
 import { useEffect, useCallback } from 'react'
 
-const Keyboard = ({ letterStatuses, addLetter, onEnterPress, onDeletePress, gameDisabled, colorBlindMode }) => {
+const Keyboard = ({ letterStatuses, addLetter, onEnterPress, onDeletePress, onClear: clearSolution, gameDisabled, colorBlindMode, isSolved }) => {
   const getKeyStyle = (letter) => {
     switch (letterStatuses[letter]) {
       case status.green:
@@ -64,10 +64,10 @@ const Keyboard = ({ letterStatuses, addLetter, onEnterPress, onDeletePress, game
         <div key={idx} className="w-full flex justify-center my-[5px]">
           {idx === 2 && (
             <button
-              onClick={onEnterPress}
-              className="h-10 xxs:h-14 w-12 px-1 text-xs font-medium mx-[3.5px] rounded nm-flat-background-sm dark:nm-flat-background-dark-sm text-primary dark:text-primary-dark"
+              onClick={isSolved ? clearSolution : onEnterPress}
+              className={`${isSolved ? "is-clear-key " : ""}h-10 xxs:h-14 w-12 px-1 text-xs font-medium mx-[3.5px] rounded nm-flat-background-sm dark:nm-flat-background-dark-sm text-primary dark:text-primary-dark`}
             >
-              ENTER
+              {isSolved ? "CLEAR" : "ENTER"}
             </button>
           )}
           {row.map((letter) => (
