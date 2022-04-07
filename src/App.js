@@ -203,7 +203,7 @@ function App() {
     setInfoModalIsOpen(false)
   }
 
-  const [darkMode, setDarkMode] = useLocalStorage('dark-mode', false)
+  const [darkMode, setDarkMode] = useLocalStorage('dark-mode', window.matchMedia('(prefers-color-scheme: dark)').matches)
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev)
   }
