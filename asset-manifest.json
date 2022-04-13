@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/wordle_archive/static/js/main.fef22eb7.js",
-    "index.html": "/wordle_archive/index.html",
-    "main.fef22eb7.js.map": "/wordle_archive/static/js/main.fef22eb7.js.map"
+    "main.js": "/wordle_archive_tmp/static/js/main.fef22eb7.js",
+    "index.html": "/wordle_archive_tmp/index.html",
+    "main.fef22eb7.js.map": "/wordle_archive_tmp/static/js/main.fef22eb7.js.map"
   },
   "entrypoints": [
     "static/js/main.fef22eb7.js"
