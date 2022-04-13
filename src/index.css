@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Ranade';
+  src: url('/public/assets/Ranade-Variable.ttf') format('ttf');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+*,
+body {
+  margin: 0;
+  font-family: 'Ranade', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  /* background-color: hsl(231, 16%, 92%); */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+#root,
+body,
+html {
+  /* Prevent overscroll on chrome (not supported on safari) */
+  overscroll-behavior-y: none;
+  min-height: 100%;
+}
+#root{
+  height: 100%;
+}
+.h-fill {
+  height: 100%;
+  max-height: -webkit-fill-available;
+}
+
+.font-righteous {
+  font-family: 'Righteous', cursive;
+}
+
+.font-og {
+  font-family: 'Courier New', monospace;
+}
+
+.flex-force-center {
+  align-items: center;
+  justify-content: center;
+}
+.dark-bg {
+  background-color: hsl(231, 16%, 25%);
+}
+.bg {
+  background-color: hsl(231, 16%, 92%);
+}
+
+.green-text {
+  color: #086e23;
+}
+
+.red-text {
+  color: #6e1a08;
+}
+
+.green-text-dark {
+  color: #b5ffc9;
+}
+
+.red-text-dark {
+  color: #ffc8c2;
+}
+
+.won {
+  background-color: #b5ffc9;
+}
+
+.won.cleared {
+  background-color: #f8ffb5;
+}
+
+.lost{
+  background-color: #ffc8c2;
+}
+
+.is-clear-key {
+  background-color: #ee5858;
+  color: white;
+}
