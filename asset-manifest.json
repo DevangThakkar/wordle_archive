@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/wordle_archive/static/css/main.a6969ef4.css",
-    "main.js": "/wordle_archive/static/js/main.876d232d.js",
-    "static/media/Cross.png": "/wordle_archive/static/media/Cross.cbf77228e847522eff11.png",
-    "static/media/Success.png": "/wordle_archive/static/media/Success.df533be8f86a57bc5946.png",
-    "static/media/Ranade-Variable.ttf": "/wordle_archive/static/media/Ranade-Variable.bb177f94a709e8e8f396.ttf",
-    "static/media/WIP3.png": "/wordle_archive/static/media/WIP3.184cd6c93fd4f1cddc30.png",
-    "index.html": "/wordle_archive/index.html",
-    "static/media/Github.svg": "/wordle_archive/static/media/Github.6a9e1709e73c56888979048bb60e60a5.svg",
-    "static/media/Settings.svg": "/wordle_archive/static/media/Settings.0808c435ed629b919ffa742a20d897f6.svg",
-    "static/media/Share.svg": "/wordle_archive/static/media/Share.5c85cd2f0a64d335b1ca8d94141183af.svg",
-    "static/media/Info.svg": "/wordle_archive/static/media/Info.ee717ac430bb01bfbbd42aa3dbffe913.svg",
-    "static/media/Close.svg": "/wordle_archive/static/media/Close.f34771d5d250820d8c5ec83c816bf8f5.svg",
-    "main.a6969ef4.css.map": "/wordle_archive/static/css/main.a6969ef4.css.map",
-    "main.876d232d.js.map": "/wordle_archive/static/js/main.876d232d.js.map"
+    "main.css": "/wordle_archive_tmp/static/css/main.2b1366c6.css",
+    "main.js": "/wordle_archive_tmp/static/js/main.1d376bab.js",
+    "static/media/Cross.png": "/wordle_archive_tmp/static/media/Cross.cbf77228e847522eff11.png",
+    "static/media/Success.png": "/wordle_archive_tmp/static/media/Success.df533be8f86a57bc5946.png",
+    "static/media/Ranade-Variable.ttf": "/wordle_archive_tmp/static/media/Ranade-Variable.bb177f94a709e8e8f396.ttf",
+    "static/media/WIP3.png": "/wordle_archive_tmp/static/media/WIP3.184cd6c93fd4f1cddc30.png",
+    "index.html": "/wordle_archive_tmp/index.html",
+    "static/media/Github.svg": "/wordle_archive_tmp/static/media/Github.6a9e1709e73c56888979048bb60e60a5.svg",
+    "static/media/Settings.svg": "/wordle_archive_tmp/static/media/Settings.0808c435ed629b919ffa742a20d897f6.svg",
+    "static/media/Share.svg": "/wordle_archive_tmp/static/media/Share.5c85cd2f0a64d335b1ca8d94141183af.svg",
+    "static/media/Info.svg": "/wordle_archive_tmp/static/media/Info.ee717ac430bb01bfbbd42aa3dbffe913.svg",
+    "static/media/Close.svg": "/wordle_archive_tmp/static/media/Close.f34771d5d250820d8c5ec83c816bf8f5.svg",
+    "main.2b1366c6.css.map": "/wordle_archive_tmp/static/css/main.2b1366c6.css.map",
+    "main.1d376bab.js.map": "/wordle_archive_tmp/static/js/main.1d376bab.js.map"
   },
   "entrypoints": [
-    "static/css/main.a6969ef4.css",
-    "static/js/main.876d232d.js"
+    "static/css/main.2b1366c6.css",
+    "static/js/main.1d376bab.js"
   ]
 }
